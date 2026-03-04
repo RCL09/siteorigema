@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origema · Design Sustentável & Produtos Criativos</title>
+    <!-- Fontes -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* === DESIGN SYSTEM === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --forest: #1b3022;
+            --leaf: #2d5e4c;
+            --clay: #b87c5a;
+            --sand: #f4eee8;
+            --white: #ffffff;
+            --text: #333333;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            --shadow-sm: 0 4px 6px rgba(0,0,0,0.03);
+            --shadow-hover: 0 15px 30px rgba(27,48,34,0.1);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text);
+            background-color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, blockquote {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .section-padding { padding: 100px 0; }
+        .bg-alt { background-color: var(--sand); }
+
+        /* === TIPOGRAFIA === */
+        .title-lg {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            color: var(--forest);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .divider {
+            width: 80px;
+            height: 2px;
+            background: var(--clay);
+            margin: 20px auto 40px;
+        }
+
+        /* === NAVBAR === */
+        .navbar {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* LOGO DA ORIGEMA - TAMANHO AUMENTADO */
+        .logo-origema {
+            width: 120px;
+            height: 120px;
+            background-image: url('logoentrada-removebg-preview.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: var(--transition);
+        }
+
+        .brand:hover .logo-origema {
+            transform: scale(1.08);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+
+        .brand-text h1 {
+            font-size: 2.2rem;
+            color: var(--forest);
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 6px;
+        }
+        .brand-text p {
+            font-size: 1rem;
+            text-transform: uppercase;
+            color: var(--clay);
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        /* Menu desktop */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--clay);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--clay);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Menu hambúrguer (mobile) */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 60px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 2px;
+            background: var(--forest);
+            transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255,255,255,0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+                box-shadow: var(--shadow-sm);
+            }
+            .nav-links.active {
+                max-height: 300px;
+            }
+            .nav-links li {
+                width: 100%;
+                text-align: center;
+                padding: 1rem 0;
+                border-bottom: 1px solid rgba(0,0,0,0.05);
+            }
+            .nav-links a::after {
+                display: none;
+            }
+            
+            .brand-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .brand-text p {
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+            
+            .logo-origema {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        /* === HERO COM LOGO DA ORIGEMA === */
+        .hero-premium {
+            height: 85vh;
+            min-height: 600px;
+            background:
+                linear-gradient(105deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.4) 70%),
+                url('logo.origema.jpeg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Versão mobile - ajuste fino */
+        @media (max-width: 768px) {
+            .hero-premium {
+                height: 70vh;
+                min-height: 500px;
+                background:
+                    linear-gradient(105deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%),
+                    url('logo.origema.jpeg') center/cover no-repeat;
+            }
+        }
+
+        /* Para telas muito pequenas */
+        @media (max-width: 480px) {
+            .hero-premium {
+                height: 60vh;
+                min-height: 400px;
+                background:
+                    linear-gradient(105deg, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.6) 100%),
+                    url('logo.origema.jpeg') center/cover no-repeat;
+            }
+        }
+
+        .hero-tag {
+            color: var(--clay);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .hero-premium h2 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin: 0.5rem 0 1rem;
+            color: var(--forest);
+        }
+
+        .hero-premium span {
+            color: var(--clay);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .cta-primary {
+            display: inline-block;
+            padding: 18px 45px;
+            background: var(--forest);
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            margin-top: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .cta-primary:hover {
+            background: var(--clay);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        /* === TIMELINE (HISTÓRIA) === */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 32px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--leaf), var(--clay));
+            opacity: 0.3;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .time-marker {
+            min-width: 70px;
+            height: 70px;
+            background: var(--leaf);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            box-shadow: var(--shadow-sm);
+            z-index: 2;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover .time-marker {
+            background: var(--clay);
+            transform: scale(1.05);
+        }
+
+        .time-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow-sm);
+            flex: 1;
+        }
+
+        .time-content h3 {
+            color: var(--forest);
+            margin-bottom: 0.5rem;
+        }
+
+        /* === SEÇÃO PROPÓSITO (MISSÃO, VISÃO, VALORES) === */
+        .purpose-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .purpose-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 4px;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .purpose-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .purpose-card h3 {
+            color: var(--forest);
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .purpose-card p, .purpose-card ul {
+            color: #555;
+            font-size: 0.95rem;
+        }
+
+        .purpose-card ul {
+            list-style: none;
+            padding: 0;
+        }
+        .purpose-card li {
+            margin-bottom: 0.3rem;
+        }
+        .purpose-card li::before {
+            content: "•";
+            color: var(--clay);
+            font-weight: bold;
+            display: inline-block;
+            width: 1rem;
+            margin-left: -1rem;
+        }
+
+        /* === PRODUTOS === */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .product-img-wrapper {
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.8s ease;
+        }
+
+        .product-card:hover .product-img {
+            transform: scale(1.1);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--leaf);
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 20px;
+            z-index: 2;
+        }
+
+        .product-details {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-details h3 {
+            color: var(--forest);
+            margin-bottom: 0.5rem;
+        }
+
+        .product-details p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--clay);
+            font-size: 1.3rem;
+        }
+
+        .btn-icon {
+            border: 1px solid #ddd;
+            background: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-icon:hover {
+            background: var(--forest);
+            color: white;
+            border-color: var(--forest);
+            transform: rotate(360deg);
+        }
+
+        /* === CONTATO === */
+        .contact-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--forest);
+            color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .contact-info {
+            padding: 3.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .contact-info h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-info p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border-bottom: 1px solid transparent;
+        }
+
+        .social-links a:hover {
+            border-bottom-color: var(--clay);
+            color: var(--clay);
+        }
+
+        .contact-form {
+            padding: 3.5rem;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-form label {
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding: 0.8rem 0;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            transition: var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-bottom-color: var(--clay);
+        }
+
+        .cta-dark {
+            padding: 1rem 2.5rem;
+            background: var(--clay);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            margin-top: 1rem;
+        }
+
+        .cta-dark:hover {
+            background: transparent;
+            border-color: var(--clay);
+            color: var(--clay);
+        }
+
+        /* === FOOTER === */
+        .main-footer {
+            padding: 2.5rem 0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+            border-top: 1px solid #eee;
+        }
+
+        /* === RESPONSIVIDADE === */
+        @media (max-width: 768px) {
+            .section-padding { padding: 60px 0; }
+            .hero-premium { height: 70vh; }
+            .contact-card { grid-template-columns: 1fr; }
+            .contact-info, .contact-form { padding: 2rem; }
+            .timeline::before { left: 25px; }
+            .time-marker { min-width: 50px; height: 50px; font-size: 1.2rem; }
+        }
+
+        /* Menu hambúrguer ativo via :target (simples, sem JS) */
+        #menu-toggle {
+            display: none;
+        }
+        #menu-toggle:checked ~ .nav-links {
+            max-height: 300px;
+        }
+        .menu-toggle {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255,255,255,0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease-out;
+                box-shadow: var(--shadow-sm);
+            }
+            #menu-toggle:checked ~ .nav-links {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-content">
+            <div class="brand">
+                <!-- LOGO DA ORIGEMA - TAMANHO AUMENTADO -->
+                <div class="logo-origema" aria-hidden="true"></div>
+                <div class="brand-text">
+                    <h1>Origema</h1>
+                    <p>DESIGN CONSCIENTE</p>
+                </div>
+            </div>
+
+            <!-- Checkbox hambúrguer (sem JS) -->
+            <input type="checkbox" id="menu-toggle" hidden>
+            <label for="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#historia">Nossa História</a></li>
+                    <li><a href="#produtos">Coleções</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- HERO COM LOGO DA ORIGEMA -->
+        <section class="hero-premium" aria-label="Introdução">
+            <div class="hero-overlay">
+                <div class="container">
+                    <span class="hero-tag">ESTÉTICA & PROPÓSITO</span>
+                    <h2>Onde a natureza encontra o <br><span>design autoral.</span></h2>
+                    <a href="#produtos" class="cta-primary">Explorar Coleção</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- HISTÓRIA COMPLETA DA ORIGEMA -->
+        <section id="historia" class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="title-lg">Nossa História</h2>
+                    <div class="divider"></div>
+                </div>
+                
+                <!-- Descrição da empresa (texto oficial) -->
+                <div style="text-align: center; max-width: 900px; margin: 0 auto 3rem;">
+                    <p style="font-size: 1.2rem; color: var(--forest); font-weight: 300; line-height: 1.8;">
+                        A <strong>ORIGEMA</strong> é uma empresa brasileira fictícia voltada à criação de produtos de design sustentável, que unem estética contemporânea, funcionalidade e responsabilidade socioambiental. A marca nasce da valorização da origem dos materiais, do trabalho artesanal e da relação ética entre design, natureza e sociedade.
+                    </p>
+                </div>
+
+                <!-- Timeline com os marcos históricos -->
+                <div class="timeline">
+                    <!-- 2018 - Fundação -->
+                    <div class="timeline-item">
+                        <div class="time-marker">2018</div>
+                        <div class="time-content">
+                            <h3>Fundação</h3>
+                            <p>A ORIGEMA foi fundada por um grupo de jovens designers recém-formados que compartilhavam a inquietação com o consumo excessivo e o descarte de materiais na indústria do design.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Primeiro produto -->
+                    <div class="timeline-item">
+                        <div class="time-marker">2018</div>
+                        <div class="time-content">
+                            <h3>Primeiro Produto</h3>
+                            <p>O primeiro produto da marca foi uma linha de luminárias produzidas a partir de madeira de demolição e resíduos industriais. A aceitação do público impulsionou a expansão do portfólio.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Expansão -->
+                    <div class="timeline-item">
+                        <div class="time-marker">2020+</div>
+                        <div class="time-content">
+                            <h3>Expansão do Portfólio</h3>
+                            <p>Mantendo sempre o compromisso com processos produtivos responsáveis e parcerias com pequenos produtores e artesãos, expandimos para mobiliário de pequeno porte, objetos decorativos e utilitários.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Atuação atual -->
+                    <div class="timeline-item">
+                        <div class="time-marker">Hoje</div>
+                        <div class="time-content">
+                            <h3>Atuação Nacional</h3>
+                            <p>Hoje, a ORIGEMA atua no mercado nacional, participando de feiras de design, exposições e projetos colaborativos, mantendo sua identidade baseada no conceito de origem, essência e propósito.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Missão, Visão e Valores (conforme documento) -->
+                <div class="purpose-grid">
+                    <div class="purpose-card">
+                        <h3>Missão</h3>
+                        <p>Criar produtos de design que respeitem o meio ambiente, valorizem a cultura local e promovam uma relação mais consciente entre pessoas, objetos e natureza.</p>
+                    </div>
+                    <div class="purpose-card">
+                        <h3>Visão</h3>
+                        <p>Ser referência nacional em design sustentável, reconhecida por unir inovação, estética e impacto social positivo.</p>
+                    </div>
+                    <div class="purpose-card">
+                        <h3>Valores</h3>
+                        <ul>
+                            <li>Sustentabilidade</li>
+                            <li>Ética e responsabilidade social</li>
+                            <li>Valorização do fazer artesanal</li>
+                            <li>Inovação consciente</li>
+                            <li>Simplicidade e funcionalidade</li>
+                            <li>Respeito às origens culturais e naturais</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Áreas de atuação (destaque) -->
+                <div style="margin-top: 4rem; text-align: center;">
+                    <h3 style="color: var(--forest); margin-bottom: 1.5rem;">Áreas de Atuação</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                        <span style="background: var(--sand); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 0.9rem;">Design de produtos</span>
+                        <span style="background: var(--sand); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 0.9rem;">Design sustentável</span>
+                        <span style="background: var(--sand); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 0.9rem;">Economia criativa</span>
+                        <span style="background: var(--sand); padding: 0.5rem 1.5rem; border-radius: 30px; font-size: 0.9rem;">Produtos ecológicos</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUTOS -->
+        <section id="produtos" class="section-padding bg-alt">
+            <div class="container">
+                <h2 class="title-lg">Produtos em Destaque</h2>
+                <div class="divider"></div>
+                <div class="product-grid">
+                    <!-- Garrafas -->
+                    <article class="product-card">
+                        <div class="product-img-wrapper">
+                            <div class="product-img" style="background-image: url('garrafas.jpeg')" loading="lazy" alt="Garrafas reutilizáveis"></div>
+                            <span class="badge">Eco-Friendly</span>
+                        </div>
+                        <div class="product-details">
+                            <h3>Garrafas</h3>
+                            <p>Sustentabilidade em cada gole: uma garrafa eco-friendly que une design orgânico e consciência ambiental.</p>
+                            <div class="product-footer">
+                                <span class="price">R$ 70</span>
+                                <button class="btn-icon" aria-label="Adicionar ao carrinho">🛒</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Bolsas -->
+                    <article class="product-card">
+                        <div class="product-img-wrapper">
+                            <div class="product-img" style="background-image: url('bolsas.jpeg')" loading="lazy" alt="Bolsas sustentáveis"></div>
+                        </div>
+                        <div class="product-details">
+                            <h3>Bolsas</h3>
+                            <p>O equilíbrio perfeito entre o minimalismo moderno e a força da natureza. Uma peça atemporal para o seu dia a dia.</p>
+                            <div class="product-footer">
+                                <span class="price">R$ 150</span>
+                                <button class="btn-icon" aria-label="Adicionar ao carrinho">🛒</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Camisas -->
+                    <article class="product-card">
+                        <div class="product-img-wrapper">
+                            <div class="product-img" style="background-image: url('camisas.jpeg')" loading="lazy" alt="Camisas ecológicas"></div>
+                            <span class="badge">Edição Limitada</span>
+                        </div>
+                        <div class="product-details">
+                            <h3>Camisas</h3>
+                            <p>Edição Limitada: Vista a ética e o conforto de uma peça produzida com respeito total ao meio ambiente.</p>
+                            <div class="product-footer">
+                                <span class="price">R$ 100</span>
+                                <button class="btn-icon" aria-label="Adicionar ao carrinho">🛒</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTATO -->
+        <section id="contato" class="section-padding">
+            <div class="container">
+                <div class="contact-card">
+                    <div class="contact-info">
+                        <h2>Vamos criar algo <br>juntos?</h2>
+                        <p>Cedro | Ceará</p>
+                        <div class="social-links">
+                            <a href="#" aria-label="Instagram">Instagram</a>
+                            <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                        </div>
+                    </div>
+                    <form class="contact-form" action="#" method="post">
+                        <div class="form-group">
+                            <label for="nome">Nome completo</label>
+                            <input type="text" id="nome" name="nome" placeholder="Seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="mensagem">Mensagem</label>
+                            <textarea id="mensagem" name="mensagem" placeholder="Como podemos ajudar?" rows="3" required></textarea>
+                        </div>
+                        <button type="submit" class="cta-dark">Enviar Mensagem</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 Origema. Feito com propósito.</p>
+        </div>
+    </footer>
+</body>
+</html>
